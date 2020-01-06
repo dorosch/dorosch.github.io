@@ -1,0 +1,11 @@
+title: "Awesome Blog"
+
+description: "My Awesome Blog"
+
+url: "http://dorosch.github.io"
+
+baseurl: ""
+
+markdown: kramdown
+
+highlighter: rouge
