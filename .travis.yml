@@ -1,4 +1,7 @@
-language: ruby
-script:
-  - gem install jekyll
-  - jekyll build --trace
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: false
+  on:
+    branch: master
