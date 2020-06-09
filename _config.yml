@@ -9,13 +9,13 @@ description: >-
 
 baseurl: "/"
 
-google_analytics: false
-
 url: "https://dorosch.github.io"
 
 github_username:  dorosch
 
 theme: minima
+
+permalink: :title
 
 kramdown:
   math_engine: mathjax
