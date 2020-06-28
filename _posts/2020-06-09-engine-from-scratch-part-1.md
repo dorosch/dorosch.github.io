@@ -1,13 +1,15 @@
+<!---
 ---
 layout: post
 title:  "Game engine from scratch - part 1"
 date:   2020-06-09 09:00:00 +0300
 categories: c++ 3d-engine
 ---
+-->
 
 In this series of posts we'll try create 3d game engine on from scratch.
 When I say `from scratch` I don't mean technologies or the algorithms it's
-only about our capabilities. We're goint to use `c++17` as primary language
+only about our capabilities. We're goint to use `c++11` as primary language
 and library `SDL2` as graphical environment but from it we'll use only ability
 to draw a pixel on the screen and interact with the keyboard and mouse.
 
@@ -74,18 +76,13 @@ We know this equation from a school mathematic and now we know how it works.
 Let's code our line:
 
 ```c++
-class Line: public AbstractPrimitive {
-public:
-    Line(Render *render): AbstractPrimitive(render) {}
+void draw(int x0, int y0, int x1, int y1, SDL_Color color=WHITE) {
+    float k = (y1 - y0)/(x1 - x0);
+    float b = y0 - k * x0;
 
-    void draw(int x0, int y0, int x1, int y1, SDL_Color color=WHITE) {
-        float k = (y1 - y0)/(x1 - x0);
-        float b = y0 - k * x0;
-
-        for (int x = x0; x < x1; x++) {
-            int y = (k * x) + b;
-            Line::render->draw(x, y, color);
-        }
+    for (int x = x0; x < x1; x++) {
+        int y = (k * x) + b;
+        Line::render->draw(x, y, color);
     }
-};
+}
 ```
