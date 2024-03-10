@@ -1,0 +1,82 @@
+# General settings
+title: dorosch blog
+description: >-
+  Description with HTML
+lang: en-US
+timezone: UTC
+image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
+repo: https://github.com/dorosch/dorosch.github.io
+mode: light
+
+# Personal settings
+author:
+  name: Andrey Doroschenko
+  bio: >-
+    Personal blog of dorosch
+  username: dorosch
+  github: dorosch
+  twitter: twitter_username
+  facebook: facebook_username
+  email: andrei.daraschenka@gmail.com
+  avatar: /assets/img/avatar.jpg
+
+# URL settings
+url: "https://dorosch.github.com"
+baseurl:
+permalink: /:title/
+google_analytics: # leave it blank if not wish
+fb_appid:
+
+# Collection setting
+collections:
+  posts:
+    output: true
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  syntax_highlighter: rouge
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: post
+      comments: false
+
+# Jekyll Compose default front matter
+jekyll_compose:
+  post_default_front_matter:
+    modified:
+    tags: []
+    description:
+  draft_default_front_matter:
+    modified:
+    tags: []
+    description:
+
+# Homepage limit posts
+number_of_posts: 20
+
+# Build settings
+sass:
+  style: compressed
+
+include:
+  - _redirects
+  - .htaccess
+
+exclude:
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-postfiles
