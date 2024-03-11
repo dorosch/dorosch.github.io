@@ -21,10 +21,10 @@ author:
   avatar: /assets/img/avatar.jpg
 
 # URL settings
-url: "https://dorosch.github.com"
+url: "https://dorosch.github.io"
 baseurl:
 permalink: /:title/
-google_analytics: # leave it blank if not wish
+google_analytics:
 fb_appid:
 
 # Collection setting
