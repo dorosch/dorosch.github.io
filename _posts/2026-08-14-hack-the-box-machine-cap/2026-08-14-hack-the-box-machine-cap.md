@@ -1,13 +1,13 @@
 ---
-title: Hack the box: machine - Cap
-date: 2026-08-14 12:00:00 +00:00
-tags: [htb, machine, easy, linux]
-description: Hack the box: walkthrough cap
+title: Hack the box - Cap
+date: 2024-03-26 12:00:00 +00:00
+tags: [htb, linux, hack]
+description: Hack the box walkthrough
 ---
 
 # Cap
 
-## Разведка
+## Exploring
 
 Since this is an easy machine, start with a quick port scan:
 
@@ -105,7 +105,7 @@ The application source code does not immediately provide another
 straightforward way to obtain root. At this point, the next step is to 
 enumerate the system for possible local privilege-escalation vectors.
 
-Transfer a [Linux enumeration script][1] to the target and execute:
+Transfer a Linux enumeration script[^1] to the target and execute:
 
 ```shell
 $ wget https://github.com/diego-treitos/linux-smart-enumeration/releases/download/4.14nw/lse.sh
@@ -131,7 +131,7 @@ The enumeration reveals several potential privilege-escalation vectors.
 The simplest candidate is `CVE-2021-4034` (PwnKit), a local privilege-escalation 
 vulnerability affecting `pkexec`.
 
-Use a proof-of-concept implementation of [CVE-2021-4034][2]. Transfer the PoC 
+Use a proof-of-concept implementation of CVE-2021-4034[^2]. Transfer the PoC 
 to the target, compile and execute:
 
 ```shell
@@ -148,5 +148,9 @@ total 8
 -r-------- 1 root root   33 Aug 14 07:36 root.txt
 ```
 
-[1]: https://github.com/diego-treitos/linux-smart-enumeration/releases/tag/4.14nw
-[2]: https://github.com/arthepsy/CVE-2021-4034/blob/main/cve-2021-4034-poc.c
+---
+
+## References
+
+[^1]: [Linux Smart Enumeration](https://github.com/diego-treitos/linux-smart-enumeration/releases/tag/4.14nw)
+[^2]: [CVE-2021-4034 POC](https://github.com/arthepsy/CVE-2021-4034/blob/main/cve-2021-4034-poc.c)
