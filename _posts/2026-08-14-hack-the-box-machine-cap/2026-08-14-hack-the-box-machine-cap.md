@@ -1,8 +1,8 @@
 ---
 title: Hack the box - Cap
-date: 2024-03-26 12:00:00 +00:00
+date: 2026-08-14 12:00:00 +00:00
 tags: [htb, linux, hack]
-description: Hack the box walkthrough
+description: Hack the box -cap walkthrough
 ---
 
 # Cap
