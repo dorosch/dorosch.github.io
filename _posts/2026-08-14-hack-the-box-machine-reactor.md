@@ -34,7 +34,7 @@ PORT     STATE SERVICE VERSION
 A web application is exposed on port 3000. At first glance, it does not provide 
 much functionality.
 
-<img src="/assets/img/2026-08-14-hack-the-box-machine-reactor/webapp.png">
+<img src="/assets/img/hack-the-box-machine-reactor/webapp.png">
 
 ## User flag
 
@@ -121,7 +121,7 @@ Analyzing '39d97110eafe2a9a68639812cd271e8e'
 The hash can be recovered using an appropriate password-recovery technique 
 (I usually start from an online services).
 
-<img src="/assets/img/2026-08-14-hack-the-box-machine-reactor/password.png">
+<img src="/assets/img/hack-the-box-machine-reactor/password.png">
 
 The resulting password can then be tested against the SSH service:
 
@@ -188,7 +188,7 @@ browser's developer tools.
 Because `/opt/uptime` is running as root, JavaScript executed in that process 
 inherits the privileges of the root-owned process.
 
-<img src="/assets/img/2026-08-14-hack-the-box-machine-reactor/devtools.png">
+<img src="/assets/img/hack-the-box-machine-reactor/devtools.png">
 
 ```javascript
 > require("fs").readdirSync("/root")

@@ -1,6 +1,6 @@
 ---
 title: Hack the box - Cap
-date: 2026-08-14 12:00:00 +00:00
+date: 2026-08-13 12:00:00 +00:00
 tags: [htb, linux, hack]
 description: Hack the box -cap walkthrough
 ---
@@ -21,7 +21,7 @@ PORT   STATE SERVICE
 
 The web interface is available on port 80. ssh and ftp hidden behind a password.
 
-<img src="/assets/img/2026-08-14-hack-the-box-machine-cap/webapp.png">
+<img src="/assets/img/hack-the-box-machine-cap/webapp.png">
 
 ## User flag
 
@@ -49,7 +49,7 @@ Several report IDs are accessible without authentication. Downloading and
 inspecting one of the packet captures in Wireshark reveals credentials for 
 a local user.
 
-<img src="/assets/img/2026-08-14-hack-the-box-machine-cap/wireshark.png">
+<img src="/assets/img/hack-the-box-machine-cap/wireshark.png">
 
 We can use the discovered credentials to authenticate to the FTP service:
 
