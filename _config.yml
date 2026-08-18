@@ -4,7 +4,6 @@ description: >-
   Description with HTML
 lang: en-US
 timezone: UTC
-image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
 repo: https://github.com/dorosch/dorosch.github.io
 mode: light
 

